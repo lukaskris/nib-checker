@@ -12,11 +12,11 @@ dependencies = [
     "fastapi>=0.142.2",
     "uvicorn[standard]>=0.54.0",
     "python-multipart>=0.0.32",
-    "turnstile-mint",
+    "cf-bypass",
 ]
 
 [tool.uv]
 package = false
 
 [tool.uv.sources]
-turnstile-mint = { git = "https://github.com/lukaskris/turnstile-mint.git" }
+cf-bypass = { git = "https://github.com/lukaskris/cf-bypass.git" }

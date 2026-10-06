@@ -1,5 +1,5 @@
-"""Turnstile tokens for the OSS RBA public NIB API, via turnstile-mint."""
-from turnstile_mint import TokenPool
+"""Turnstile tokens for the OSS RBA public NIB API, via cf-bypass."""
+from cf_bypass import TokenPool
 
 OSS_PAGE = "https://oss.go.id/id"
 SITEKEY = "0x4AAAAAAB6dVZCgIaP5qKs3"
