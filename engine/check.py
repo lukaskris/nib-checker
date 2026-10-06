@@ -13,7 +13,7 @@ import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
 
-from . import cache, fast_extract, llm_extract, matcher, oss_client, token_pool
+from . import cache, fast_extract, llm_extract, matcher, oss_client, tokens
 
 MIN_OSS_GAP = 12  # seconds between real OSS API calls
 _oss_lock = threading.Lock()
@@ -33,7 +33,7 @@ def _call_oss(nib: str, token: str) -> dict:
             if e.status != 429:
                 raise
             time.sleep(15)
-            return oss_client.check_nib(nib, token_pool.get_token())
+            return oss_client.check_nib(nib, tokens.get_token())
         finally:
             _last_oss = time.time()
 
@@ -54,7 +54,7 @@ def steps(pdf_path: str):
 
     with ThreadPoolExecutor(max_workers=2) as pool:
         llm_fut = pool.submit(llm_extract.extract_fields, pdf["full_text"]) if need_llm else None
-        token_fut = None if cached else pool.submit(token_pool.get_token)
+        token_fut = None if cached else pool.submit(tokens.get_token)
 
         if llm_fut:
             extra = llm_fut.result()
@@ -85,7 +85,7 @@ def steps(pdf_path: str):
 
     if cached:
         data = cached
-        token_pool.warm_next()  # pool already had one; keep the chain going
+        tokens.warm_next()  # pool already had one; keep the chain going
     else:
         yield "mint", {"nib": nib}
         try:
@@ -108,7 +108,7 @@ def steps(pdf_path: str):
             return
         data = api["data"]
         cache.put(nib, data)
-        token_pool.warm_next()
+        tokens.warm_next()
 
     result["oss_data"] = data
     result["nib_valid"] = bool(data.get("nib"))
