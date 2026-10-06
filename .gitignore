@@ -1,0 +1,14 @@
+# python
+.venv/
+__pycache__/
+*.pyc
+
+# secrets & runtime
+.env
+.cache/
+
+# os
+.DS_Store
+
+# sample documents
+*.pdf

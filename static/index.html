@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NIB Checker</title>
+  <meta name="description" content="Verify NIB documents against OSS RBA data.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231C1A16'/%3E%3Ctext x='16' y='21' font-family='monospace' font-size='11' fill='%23F6F3ED' text-anchor='middle'%3ENIB%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="wordmark" href="/">NIB&nbsp;Checker</a>
+    <p class="tagline">Business identification number · OSS RBA data</p>
+  </header>
+
+  <main class="stage" aria-labelledby="heading">
+    <h1 class="visually-hidden" id="heading">Verify NIB documents</h1>
+
+    <section class="dropzone" id="dropzone" role="button" tabindex="0" aria-label="Upload NIB document PDF">
+      <span class="corner tl" aria-hidden="true"></span>
+      <span class="corner tr" aria-hidden="true"></span>
+      <span class="corner bl" aria-hidden="true"></span>
+      <span class="corner br" aria-hidden="true"></span>
+      <div class="dz-inner">
+        <svg class="dz-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/>
+        </svg>
+        <p class="dz-text">Drop the NIB document here</p>
+        <p class="dz-or">or</p>
+        <button class="btn" id="pickBtn" type="button">Choose PDF file</button>
+        <p class="dz-hint">PDF, up to 10 MB. The number is checked against the public OSS RBA service.</p>
+      </div>
+      <input type="file" id="fileInput" accept="application/pdf,.pdf" hidden>
+    </section>
+
+    <div class="scan-overlay" id="scanOverlay" hidden aria-live="polite" aria-label="Checking document">
+      <div class="scan-scene" aria-hidden="true">
+        <div class="ring r1"></div>
+        <div class="ring r2"></div>
+        <div class="ring r3"></div>
+        <div class="doc3d">
+          <div class="sheet">
+            <span class="sheet-lines"></span>
+            <span class="sheet-stamp">NIB</span>
+            <div class="scanbeam"></div>
+          </div>
+          <span class="tick t1"></span>
+          <span class="tick t2"></span>
+          <span class="tick t3"></span>
+          <span class="tick t4"></span>
+        </div>
+      </div>
+      <p class="scan-file" id="scanFile"></p>
+      <p class="scan-note">Checking document…</p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>The address is taken from the document. Reference data: the public OSS RBA service.</p>
+  </footer>
+
+  <dialog class="result-dialog" id="resultDialog" aria-labelledby="verdictStamp">
+    <div class="dialog-inner">
+      <div class="verdict" id="verdict">
+        <span class="verdict-stamp" id="verdictStamp">Verified</span>
+        <p class="verdict-sub" id="verdictSub"></p>
+      </div>
+
+      <dl class="data" id="dataRows"></dl>
+
+      <p class="error-note" id="errorNote" hidden></p>
+
+      <div class="dialog-actions">
+        <button class="btn" id="againBtn" type="button">Check another document</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+[project]
+name = "nib-checker"
+version = "0.1.0"
+description = "NIB document validator against OSS RBA"
+requires-python = ">=3.11"
+dependencies = [
+    "pypdf>=5",
+    "patchright>=1.0",
+    "httpx>=0.27",
+    "camoufox[geoip]>=0.5.7",
+    "browserforge>=1.2.4",
+    "fastapi>=0.142.2",
+    "uvicorn[standard]>=0.54.0",
+    "python-multipart>=0.0.32",
+]
+
+[tool.uv]
+package = false
